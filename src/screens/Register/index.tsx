@@ -42,7 +42,7 @@ export function Register(){
                         />
                         <TransactionTypeButton
                             type="down"
-                            title="outcome"
+                            title="Outcome"
                             onPress={() => handleTransactionTypeSelect('down')}
                             isActive={transactionType === 'down'}
                         />
