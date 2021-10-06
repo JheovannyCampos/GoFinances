@@ -12,8 +12,9 @@ import {
   Roboto_700Bold
 } from '@expo-google-fonts/roboto'
 
-import  { AppRoutes }  from './src/routes/app.routes';
+//import  { Register }  from './src/screens/Register';
 import theme from "./src/global/styles/theme";
+import  { AppRoutes }  from './src/routes/app.routes';
 
 export default function App() {
   const[fontsLoaded] = useFonts({
