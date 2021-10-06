@@ -9,7 +9,6 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form"
 import { InputForm } from '../../components/Form/InputForm';
-import { Input } from '../../components/Form/Input';
 import { Button } from '../../components/Form/Button';
 import { CategorySelectButton }  from '../../components/Form/CategorySelectButton';
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
@@ -38,6 +37,7 @@ const schema = Yup.object().shape({
         .number()
         .typeError("Informe um valor numérico")
         .positive("O valor não pode ser negativo")
+        .required("O valor é obrigatório")
 })
 
 export function Register(){
