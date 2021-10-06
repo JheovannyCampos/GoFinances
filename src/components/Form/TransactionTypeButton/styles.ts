@@ -19,7 +19,7 @@ export const Container = styled.View<ContainerProps>`
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.text};
     border-radius: 5px;
-
+    background-color: ${({ theme }) => theme.colors.text_light};
     ${({ isActive, type }) => isActive && type === 'down' && css`
         background-color: ${({ theme }) => theme.colors.attention_light}
     `};

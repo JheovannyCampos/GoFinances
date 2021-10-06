@@ -90,6 +90,7 @@ export function Register(){
                 <Header>
                     <Title>Cadastro</Title>
                 </Header>
+
                 <Form>
                     <Fields>
                         <InputForm
