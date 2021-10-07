@@ -3,7 +3,9 @@ import AppLoading from 'expo-app-loading'
 import { ThemeProvider } from "styled-components"
 import "react-native-gesture-handler";
 
-import { NavigationContainer } from "@react-navigation/native"
+import { NavigationContainer } from "@react-navigation/native";
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
 
 import {
   useFonts,
