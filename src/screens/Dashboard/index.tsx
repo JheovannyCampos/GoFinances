@@ -28,6 +28,7 @@ import {
     LogoutButton,
     LoadContainer,
  } from "./styles";
+import { Button } from "../../components/Form/Button";
 
 export interface DataListProps extends TransactionCardProps {
     id: string;
@@ -136,14 +137,18 @@ export function Dashboard(){
         });
 
     }
+    async function removeAll() {    
+        const dataKey = '@gofinances:transactions';
+        await AsyncStorage.removeItem(dataKey);
+    }
 
     useEffect(() => {
         loadTransactions();
     },[])
-
     useFocusEffect(useCallback(() => {
         loadTransactions();
     },[]));
+
     return(
         <Container>
             {
@@ -161,7 +166,7 @@ export function Dashboard(){
                             <Photo source={{uri : 'https://avatars.githubusercontent.com/u/53500639?v=4'}}
                             />
                             <User>
-                                <UserGreeting>Olá, </UserGreeting>
+                                <UserGreeting>Olá </UserGreeting>
                                 <UserName>Jheovanny</UserName>
                             </User>
                         </UserInfo>
@@ -188,7 +193,7 @@ export function Dashboard(){
                     <HighlightCard 
                         title="Total" 
                         amount={highlightData?.total?.amount}
-                        lastTransaction={highlightData.total.lastTransaction} 
+                        lastTransaction={highlightData?.total?.lastTransaction} 
                         type="total"
                     />
                 </HighlightCards>
@@ -200,9 +205,14 @@ export function Dashboard(){
                         data={transactions}
                         keyExtractor={item => item.id}
                         renderItem={({item}) => <TransactionCard data={item}/>}
-                        showsVerticalScrollIndicator={false}  
+                        showsVerticalScrollIndicator={false}
+                    />
+                    <Button
+                        title="Apagar itens"
+                        onPress={() => removeAll()}
                     />
                 </Transactions>
+                
             </>
             }
         </Container>

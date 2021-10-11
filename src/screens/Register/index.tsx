@@ -46,7 +46,7 @@ const schema = Yup.object().shape({
 export function Register(){
     const [transactionType, setTransactionType] = useState('')
     const [categoryModalOpen, setCategoryModalOpen] = useState(false)
-    
+
 
     const [category, setCategory] = useState({
         key: 'category',
@@ -72,7 +72,7 @@ export function Register(){
         setCategoryModalOpen(true);
     }
 
-    function handleCloseSelectCategoryModal(){ //
+    function handleCloseSelectCategoryModal(){ 
         setCategoryModalOpen(false);
     }
 
@@ -93,7 +93,6 @@ export function Register(){
         }
         try {
             const dataKey = '@gofinances:transactions';
-
             const data = await AsyncStorage.getItem(dataKey);
             const currentData = data ? JSON.parse(data) : [];
 
@@ -101,7 +100,7 @@ export function Register(){
                 ...currentData,
                 newTransaction
             ];
-
+            
             await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormated));
             
             reset();
@@ -112,13 +111,13 @@ export function Register(){
             });
 
             navigation.navigate('Listagem');
-
+            
         } catch (error) {
             console.log(error);
             Alert.alert("Não foi possivel salvar");
         }
     }
-
+    
     return(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Container>

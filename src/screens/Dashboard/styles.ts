@@ -62,7 +62,7 @@ export const LogoutButton = styled(BorderlessButton)`
 `;
 
 export const Icon = styled(Feather)`
-    color: ${( { theme } ) => theme.colors.secondary};
+    color: ${( { theme } ) => theme.colors.shape};
     font-size: ${RFValue(24)}px;
 `;
 
