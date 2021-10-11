@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, ScrollView } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -28,7 +28,8 @@ import {
     LogoutButton,
     LoadContainer,
  } from "./styles";
-import { Button } from "../../components/Form/Button";
+
+import { ButtonDelete } from "../../components/Form/ButtonDelete"
 
 export interface DataListProps extends TransactionCardProps {
     id: string;
@@ -138,8 +139,11 @@ export function Dashboard(){
 
     }
     async function removeAll() {    
+
         const dataKey = '@gofinances:transactions';
         await AsyncStorage.removeItem(dataKey);
+    
+        loadTransactions();
     }
 
     useEffect(() => {
@@ -200,19 +204,16 @@ export function Dashboard(){
             
                 <Transactions>
                     <Title>Listagem</Title>
-
-                    <TransactionList 
+                    <ButtonDelete 
+                        title="Apagar"
+                        onPress={() => removeAll()}/>
+                    <TransactionList
                         data={transactions}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => <TransactionCard data={item}/>}
+                        renderItem={({item}) => <TransactionCard data={item} />}
                         showsVerticalScrollIndicator={false}
                     />
-                    <Button
-                        title="Apagar itens"
-                        onPress={() => removeAll()}
-                    />
                 </Transactions>
-                
             </>
             }
         </Container>
