@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { ActivityIndicator, ScrollView } from "react-native";
+import { ActivityIndicator, Alert, ScrollView } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -30,6 +30,7 @@ import {
  } from "./styles";
 
 import { ButtonDelete } from "../../components/Form/ButtonDelete"
+import { useAuth } from "../../hooks/auth";
 
 export interface DataListProps extends TransactionCardProps {
     id: string;
@@ -51,22 +52,26 @@ export function Dashboard(){
     const [highlightData, setHighlightData] = useState<HightlightData>({} as HightlightData);
 
     const theme = useTheme();
+    const { signOut, user } = useAuth();
 
     function getLastTransactionDate(
         collection: DataListProps[],
         type: 'positive' | 'negative'
-        ){
+    ){
+        const colletionFilttered = collection
+        .filter(transaction => transaction.type === type);
+
+        if(colletionFilttered.length === 0) return 0;
 
         const lastTransaction = new Date(
-        Math.max.apply(Math, collection
-        .filter(transaction  => transaction.type === type)
+        Math.max.apply(Math, colletionFilttered
         .map(transaction => new Date(transaction.date).getTime())))
         
         return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', {month: 'long'})}`;
     }
-
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
     async function loadTransactions(){
-        const dataKey = '@gofinances:transactions';
+        
         const response = await AsyncStorage.getItem(dataKey);
         const transactions = response ? JSON.parse(response) : [];
 
@@ -109,7 +114,8 @@ export function Dashboard(){
 
         const lastTransactionEntries = getLastTransactionDate(transactions, 'positive')
         const lastTransactionExpensives = getLastTransactionDate(transactions, 'negative')
-        const totalInterval = `01 a ${lastTransactionEntries}`
+        
+        const totalInterval = lastTransactionEntries === 0 ? 'Não há transações' : `01 a ${lastTransactionEntries}`
 
         const total = entriesTotal - expensiveTotal;
 
@@ -119,36 +125,47 @@ export function Dashboard(){
                  style: 'currency',
                  currency: 'BRL',  
                 }),
-                lastTransaction: `Última entrada dia ${lastTransactionEntries}`, 
+                lastTransaction: lastTransactionEntries === 0 ? 'Não há transações' : `Última entrada dia ${lastTransactionEntries}`, 
             },
             expensives: {
                 amount: expensiveTotal.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',   
                    }),
-                   lastTransaction: `Última saída dia ${lastTransactionExpensives}`,
+                   lastTransaction: lastTransactionExpensives === 0 ? 'Não há transações' : `Última saída dia ${lastTransactionExpensives}`,
             },
             total: {
                 amount: total.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',   
                    }),
-                   lastTransaction: totalInterval
+                   lastTransaction: totalInterval ,
             }
         });
 
     }
-    async function removeAll() {    
+    async function handleRemoveTransaction(transactionId: string) {
+        const response = await AsyncStorage.getItem(dataKey);
+        const storagedTransactions = response ? JSON.parse(response) : [];
+       
+        const filteredTransactions = storagedTransactions
+        .filter((transaction: DataListProps) => transaction.id !== transactionId);
+      
+        setTransactions(filteredTransactions);
+        await AsyncStorage.setItem(dataKey, JSON.stringify(filteredTransactions));
+  
+        loadTransactions()
+        }
+        function alerta(name: string, id: string) {
+          Alert.alert(`Você deseja deletar ${String(name)}`,
+          "",
+          [
+            {text: 'Cancelar', },
+            {text: 'Deletar', onPress: () => handleRemoveTransaction(id) },
+          ],
+            {cancelable: false}
+          )}
 
-        const dataKey = '@gofinances:transactions';
-        await AsyncStorage.removeItem(dataKey);
-    
-        loadTransactions();
-    }
-
-    useEffect(() => {
-        loadTransactions();
-    },[])
     useFocusEffect(useCallback(() => {
         loadTransactions();
     },[]));
@@ -167,15 +184,15 @@ export function Dashboard(){
                 <Header>
                     <UserWrapper>    
                         <UserInfo>
-                            <Photo source={{uri : 'https://avatars.githubusercontent.com/u/53500639?v=4'}}
+                            <Photo source={{uri : user.photo}}
                             />
                             <User>
                                 <UserGreeting>Olá </UserGreeting>
-                                <UserName>Jheovanny</UserName>
+                                <UserName>{user.name}</UserName>
                             </User>
                         </UserInfo>
                         <LogoutButton
-                            onPress={() => {}}
+                            onPress={signOut}
                         >
                             <Icon name="power" />
                         </LogoutButton>
@@ -204,13 +221,11 @@ export function Dashboard(){
             
                 <Transactions>
                     <Title>Listagem</Title>
-                    <ButtonDelete 
-                        title="Apagar"
-                        onPress={() => removeAll()}/>
+                    
                     <TransactionList
                         data={transactions}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => <TransactionCard data={item} />}
+                        renderItem={({item}) => <TransactionCard onPress={()=> alerta(item.name, item.id)} data={item} />}
                         showsVerticalScrollIndicator={false}
                     />
                 </Transactions>

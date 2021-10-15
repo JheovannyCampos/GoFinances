@@ -4,7 +4,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons"
 
 export const Container = styled(RectButton)`
-    width: 21%;
+    width: 20%;
     background-color: red;
     
     padding: 10px;
@@ -14,6 +14,6 @@ export const Container = styled(RectButton)`
 `;
 
 export const Title = styled(Feather)`
-    font-size: ${RFValue(14)}px;
+    font-size: ${RFValue(12)}px;
     color: ${({ theme }) => theme.colors.shape};
 `;

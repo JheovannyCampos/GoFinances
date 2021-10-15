@@ -21,14 +21,18 @@ export interface TransactionCardProps{
 
 interface Props{
     data: TransactionCardProps;
+    onPress: () => void;
 }
 
-export function TransactionCard({ data }:Props) {
+export function TransactionCard({ data, onPress }:Props) {
     const category = categories.filter(
         item => item.key === data.category
     )[0];
     return(
-        <Container>
+        <Container
+            onPress={onPress}
+        >
+
             <Title>{data.name}</Title>
             
             <Amount type={data.type}>

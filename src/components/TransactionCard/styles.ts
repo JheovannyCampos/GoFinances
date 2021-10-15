@@ -1,12 +1,13 @@
 import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons"
 import {RFValue} from "react-native-responsive-fontsize";
+import { TouchableOpacity } from "react-native";
 
 interface TransactionProps{
     type: 'positive' | 'negative';
 }
 
-export const Container = styled.View`
+export const Container = styled(TouchableOpacity)`
     background-color: ${({ theme }) => theme.colors.shape};
     border-radius: 5px;
 
