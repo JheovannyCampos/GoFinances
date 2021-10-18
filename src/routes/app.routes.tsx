@@ -21,6 +21,7 @@ export function AppRoutes(){
                 tabBarStyle: {
                     height: 60,
                     paddingVertical: Platform.OS === 'ios' ? 20 : 0,
+                    backgroundColor: theme.colors.background_dark,
                 }
             }}
         >

@@ -19,6 +19,8 @@ export default {
         text_dark: "#000000",
         text: "#969cb2",
         background: "#f0f2f8",
+        background_dark: "#292b30",
+        dark_light: "#47494d",
     },
 
     fonts:{

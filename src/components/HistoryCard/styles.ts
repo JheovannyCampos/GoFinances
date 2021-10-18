@@ -9,7 +9,7 @@ interface ConainerProps {
 export const Container = styled.View<ConainerProps>`
     width: 100%;
 
-    background-color: ${({ theme}) => theme.colors.shape};
+    background-color: ${({ theme}) => theme.colors.background_dark};
     flex-direction: row;
     justify-content: space-between;
 
@@ -24,8 +24,10 @@ export const Container = styled.View<ConainerProps>`
 export const Title = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};
     font-size: ${RFValue(15)}px;
+    color: ${({ theme }) => theme.colors.shape};
 `;
 export const Amount = styled.Text`
     font-family: ${({ theme }) => theme.fonts.bold};
     font-size: ${RFValue(15)}px;
+    color: ${({ theme }) => theme.colors.shape};
 `;

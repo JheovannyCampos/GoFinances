@@ -120,6 +120,13 @@ export function Dashboard(){
         const total = entriesTotal - expensiveTotal;
 
         setHighlightData({
+            total: {
+                amount: total.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',   
+                   }),
+                   lastTransaction: totalInterval ,
+            },
             entries: {
                 amount: entriesTotal.toLocaleString('pt-BR', {
                  style: 'currency',
@@ -134,13 +141,7 @@ export function Dashboard(){
                    }),
                    lastTransaction: lastTransactionExpensives === 0 ? 'Não há transações' : `Última saída dia ${lastTransactionExpensives}`,
             },
-            total: {
-                amount: total.toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',   
-                   }),
-                   lastTransaction: totalInterval ,
-            }
+            
         });
 
     }
@@ -199,6 +200,12 @@ export function Dashboard(){
                     </UserWrapper> 
                 </Header>
                 <HighlightCards>
+                <HighlightCard 
+                        title="Total" 
+                        amount={highlightData?.total?.amount}
+                        lastTransaction={highlightData?.total?.lastTransaction} 
+                        type="total"
+                    />
                     <HighlightCard 
                         title="Entradas" 
                         amount={highlightData?.entries?.amount}
@@ -211,12 +218,6 @@ export function Dashboard(){
                         lastTransaction={highlightData?.expensives?.lastTransaction}
                         type="down"
                     />  
-                    <HighlightCard 
-                        title="Total" 
-                        amount={highlightData?.total?.amount}
-                        lastTransaction={highlightData?.total?.lastTransaction} 
-                        type="total"
-                    />
                 </HighlightCards>
             
                 <Transactions>

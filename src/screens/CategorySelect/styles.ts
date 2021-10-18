@@ -11,7 +11,7 @@ interface CategoryProps{
 
 export const Container = styled(GestureHandlerRootView)`
     flex: 1;
-    background-color: ${({ theme }) => theme.colors.background}
+    background-color: ${({ theme }) => theme.colors.background_dark}
 `;
 
 export const Header = styled(GestureHandlerRootView)`
@@ -37,7 +37,7 @@ export const Category = styled.TouchableOpacity<CategoryProps>`
     align-items: center;
 
     background-color: ${({ isActive }) =>
-        isActive ? theme.colors.secondary_light : theme.colors.background
+        isActive ? theme.colors.secondary_light : theme.colors.background_dark
     };
 `;
 
@@ -49,6 +49,7 @@ export const Icon = styled(Feather)`
 export const Name = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};
     font-size: ${RFValue(14)}px;
+    color: ${({ theme }) => theme.colors.shape}
 `;
 
 export const Separator = styled.Text`

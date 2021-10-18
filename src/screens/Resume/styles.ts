@@ -4,7 +4,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { Feather } from "@expo/vector-icons";
 
 export const Container = styled.View`
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.background_dark};
     flex: 1;
 `;
 
@@ -24,11 +24,14 @@ export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const Content = styled.ScrollView``;
+export const Content = styled.ScrollView`
+    
+`;
 
 export const ChartContainer = styled.View`
     width: 100%;
     align-items: center;
+    
 `;
 
 export const MonthSelect = styled.View`
@@ -41,18 +44,23 @@ export const MonthSelect = styled.View`
 
 `;
 
-export const MonthSelectButton = styled(BorderlessButton)``;
+export const MonthSelectButton = styled(BorderlessButton)`
+
+`;
 
 export const MonthSelectIcon = styled(Feather)`
     font-size: ${RFValue(24)}px;
+    color: ${({ theme }) => theme.colors.shape};
 `;
 
 export const Month = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};
     font-size: ${RFValue(20)}px;
+    color: ${({ theme }) => theme.colors.shape};
 `;
 export const LoadContainer = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
+    
 `;
